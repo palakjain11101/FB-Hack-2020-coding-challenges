@@ -1,0 +1,53 @@
+# coding=utf-8
+# In this problem, your job is to identify the most popular hashtags appearing
+# in a set of k posts.
+
+# The input will describe the posts, with each post given by two lines (and
+# with one blank line between each pair of consecutive posts):
+
+# The first line will consist of a single integer between 0 and 1440
+# (inclusive), the minute of the day at which the post was made. Multiple posts
+# may have been made at the same time, and the posts will not necessarily be
+# given in order of when they were made.
+
+# The second line will consist of a non-empty string of characters (potentially
+# including spaces), the content of the post.
+
+# A token is defined as a substring of non-space characters in a post’s
+# content, immediately surrounded on the left and right by either spaces or the
+# beginning/end of the content. Please note that a token may include
+# punctuation. A hashtag is then defined as a token beginning with a “#”. It’s
+# guaranteed that no token will include an “#” anywhere after its first
+# character.
+
+# Output the single hashtag which appears the largest number of times across
+# all posts. It’s guaranteed that at least one hashtag appears in the input,
+# and that multiple hashtags will not be tied for the largest number of
+# occurrences. Please note that post timestamps are irrelevant in this version
+# of this problem.
+
+import operator
+
+def most_popular_hashtag(posts_file_path):
+    posts_file = open(posts_file_path, "r").read()
+    posts = posts_file.split("\n\n")
+    hashtag_count = {}
+    for post in posts:
+        tokens = post.split()
+        hashtags = []
+        for token in tokens:
+            if token[0] == "#":
+                hashtags.append(token)
+        for hashtag in hashtags:
+            count = hashtag_count.get(hashtag)
+            if count is not None:
+                hashtag_count[hashtag] += 1
+            else:
+                hashtag_count[hashtag] = 1
+    popular = max(hashtag_count.iteritems(), key=operator.itemgetter(1))[0]
+    f = open("Hashtags/Easy/output.txt", "w")
+    f.write(popular)
+    return popular
+
+
+print(most_popular_hashtag("Hashtags/Easy/hashtags_easy_input.txt"))

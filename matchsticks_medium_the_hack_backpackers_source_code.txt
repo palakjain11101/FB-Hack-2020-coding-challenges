@@ -1,0 +1,32 @@
+from collections import Counter
+
+inputFile = open('matchsticks_medium_input.txt', 'r') 
+outputFile = open('output.txt', 'w') 
+Lines = inputFile.readlines() 
+
+
+  
+for line in Lines: 
+  numList = line.split()
+  numCount = Counter(numList)
+  possibleMatches = []
+
+  for num in numCount:   
+    if numCount[num] >= 2:
+      possibleMatches.append(int(num))
+
+  if len(possibleMatches) >= 1:
+    possibleMatches.sort(reverse=True)
+    if numCount[str(possibleMatches[0])] >= 4:
+      parameter = possibleMatches[0] * 4
+      outputFile.write(str(parameter) + " ")
+    else:
+      x = possibleMatches[0] * 2
+      y = possibleMatches[1] * 2
+      parameter = x + y
+      outputFile.write(str(parameter) + " ")
+  else:
+    outputFile.write("-1")
+      
+inputFile.close()
+outputFile.close()

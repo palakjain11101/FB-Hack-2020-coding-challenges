@@ -1,0 +1,30 @@
+fname = "calculator_medium_input"
+inputFile = open(fname + '.txt','r')
+outputFile = open('output_'+fname+'.txt','w')
+lines = inputFile.readlines()
+
+def calc_solve(eqn):
+    numstack = []
+    for arg in reversed(eqn):
+        if arg == "+":
+            a = numstack.pop()
+            b = numstack.pop()
+            numstack.append(a + b)
+        elif arg == "-":
+            a = numstack.pop()
+            b = numstack.pop()
+            numstack.append(a - b)
+        elif arg == "*":
+            a = numstack.pop()
+            b = numstack.pop()
+            numstack.append(a * b)
+        else:
+            numstack.append(int(arg))
+
+    return str(numstack.pop())
+
+for line in lines:
+    outputFile.write(calc_solve(line.split()) + " ")
+
+inputFile.close()
+outputFile.close()    

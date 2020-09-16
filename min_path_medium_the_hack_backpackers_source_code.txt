@@ -1,0 +1,29 @@
+inputFile = open('min_path_medium_input.txt','r')
+outputFile = open('output_medium_sample.txt','w')
+Lines = inputFile.readlines()
+a = len(Lines)  ## how many rows
+b = len(list(map(int, Lines[0].split()))) ## how many columns
+
+
+def min2(matrix,a,b):
+    dp = [[0 for _ in range(b)] for _ in range(a)]
+    matrix = [[int(x) for x in line.split()] for line in matrix]
+    for i in range(0,b):
+        dp[0][i] = dp[0][i-1]+matrix[0][i]
+
+    for j in range(0,a):
+        dp[j][0] = dp[j-1][0]+matrix[j][0]
+
+    for i in range(1,a):
+        for j in range(1,b):
+            dp[i][j] = min(dp[i-1][j], dp[i][j-1])+matrix[i][j]
+
+    return str(dp[a-1][b-1])
+    
+outputFile.write(min2(Lines,a,b))
+
+inputFile.close()
+outputFile.close()    
+
+
+

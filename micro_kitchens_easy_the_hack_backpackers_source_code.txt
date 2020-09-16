@@ -1,0 +1,23 @@
+fname = "micro_kitchens_easy_input"
+inpfile = open(fname + ".txt", "r")
+w, h, n = [int(x) for x in inpfile.readline().split()]
+ans = []
+for _ in range(n):
+    floormap = []
+    for i in range(h):
+        floormap.append(inpfile.readline().split())
+    offices = []
+    for i in range(h):
+        for j in range(w):
+            if floormap[i][j] == "o":
+                offices.append((i, j))
+    ans.append(min([
+        (sum([abs(k-i)+abs(l-j) for k, l in offices]), i, j)
+                    for i in range(h) for j in range(w)
+    ]))
+inpfile.close()
+
+with open(f"ans_{fname}.txt", "w") as outfile:
+    for sum, x, y in ans:
+        print(sum, x, y)
+        outfile.write(f"({y}, {x})")

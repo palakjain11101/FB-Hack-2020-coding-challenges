@@ -1,0 +1,25 @@
+inputFile = open('min_path_easy_input.txt','r')
+outputFile = open('output.txt','w')
+Lines = inputFile.readlines()
+
+def min1(fav,a):
+    start = min(fav[0],fav[1])
+    end = max(fav[0],fav[1])
+    
+    walkRight = 0
+    for i in range(start, end):
+        walkRight += a[i]
+    
+    walkLeft = 0
+    for j in range(0, start):
+        walkLeft += a[j]
+    for k in range(end, len(a)):
+        walkLeft += a[k]
+        
+    return str(min(walkRight,walkLeft))
+       
+outputFile.write(min1(list(map(int ,Lines[0].split())), list(map(int, Lines[1].split()))))
+
+inputFile.close()
+outputFile.close()    
+

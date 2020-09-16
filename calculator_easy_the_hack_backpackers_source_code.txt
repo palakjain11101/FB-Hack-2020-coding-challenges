@@ -1,0 +1,10 @@
+inputFile = open('calculator_easy_input.txt', 'r') 
+outputFile = open('output.txt', 'w') 
+Lines = inputFile.readlines() 
+  
+for line in Lines: 
+  result = eval(line)
+  outputFile.write(str(result) + " ")
+
+inputFile.close()
+outputFile.close()
